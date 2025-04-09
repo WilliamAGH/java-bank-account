@@ -2,7 +2,7 @@
  * Lab 4, Group 3: Java Bank Account Class
  * Description: Defines a BankAccount class to manage balance and transactions
  * Author: William Callahan & Roman Labonte
- * Date: 4/8/2025
+ * Date: April 8, 2025
  */
 
 import java.util.Calendar;
@@ -22,7 +22,7 @@ public class BankAccount {
      * Default constructor, initializes the balance to zero and assigns a default account number (0)
      */
     public BankAccount() {
-        this.accountNumber = 0; // Default account number
+        this.accountNumber = 0;
         this.balance = 0.0;
         this.transactions = new StringBuilder("Account Statement:\n");
         recordTransaction("Account opened", 0.0);
@@ -59,8 +59,6 @@ public class BankAccount {
             recordTransaction("Deposit", amount);
         } else {
             System.out.println("Deposit amount must be positive.");
-            // Optionally record the failed attempt
-            // recordTransaction("Failed deposit attempt (negative amount)", amount);
         }
     }
 
@@ -73,15 +71,11 @@ public class BankAccount {
     public void withdraw(double amount) {
         if (amount <= 0) {
             System.out.println("Withdrawal amount must be positive.");
-            // Optionally record the failed attempt
-            // recordTransaction("Failed withdrawal attempt (non-positive amount)", amount);
         } else if (balance >= amount) {
             balance -= amount;
             recordTransaction("Withdrawal", amount);
         } else {
             System.out.println("Insufficient funds for withdrawal.");
-             // Optionally record the failed attempt
-            // recordTransaction("Failed withdrawal attempt (insufficient funds)", amount);
         }
     }
 
