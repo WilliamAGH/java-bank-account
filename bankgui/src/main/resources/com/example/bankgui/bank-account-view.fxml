@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.control.ToggleButton?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.control.MenuBar?>
+<?import javafx.scene.control.Menu?>
+<?import javafx.scene.control.MenuItem?>
+<?import javafx.scene.control.ToolBar?>
+<?import javafx.scene.control.Separator?>
+<?import javafx.scene.control.Tooltip?>
+
+<!-- this is the main layout file for the Bank GUI application built with JavaFX using Atlantafx and FontAwesome icons with Scene Builder -->
+
+<BorderPane xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.bankgui.BankController" prefHeight="500.0" prefWidth="650.0">
+   <top>
+      <VBox>
+          <MenuBar>
+            <menus>
+              <Menu mnemonicParsing="false" text="File">
+                <items>
+                  <MenuItem fx:id="createAccountMenuItem" mnemonicParsing="false" text="Create New Account" onAction="#handleCreateAccount" />
+                  <MenuItem fx:id="exitMenuItem" mnemonicParsing="false" text="Exit" onAction="#handleExit"/>
+                </items>
+              </Menu>
+              <Menu mnemonicParsing="false" text="Help">
+                <items>
+                  <MenuItem fx:id="aboutMenuItem" mnemonicParsing="false" text="About" onAction="#handleAbout" />
+                </items>
+              </Menu>
+            </menus>
+          </MenuBar>
+          <ToolBar>
+              <Button fx:id="depositButton" mnemonicParsing="false" text="Deposit" onAction="#handleDeposit">
+              </Button>
+              <Button fx:id="withdrawButton" mnemonicParsing="false" text="Withdraw" onAction="#handleWithdraw">
+              </Button>
+              <Separator orientation="VERTICAL" />
+              <Button fx:id="balanceButton" mnemonicParsing="false" text="Balance" onAction="#handleShowBalance">
+              </Button>
+               <Button fx:id="statementButton" mnemonicParsing="false" text="Statement" onAction="#handleShowStatement">
+               </Button>
+              <Separator orientation="VERTICAL" />
+              <ToggleButton fx:id="themeToggle" text="Theme" onAction="#handleThemeToggle">
+              </ToggleButton>
+          </ToolBar>
+      </VBox>
+   </top>
+   <center>
+      <VBox alignment="TOP_CENTER" spacing="15.0" BorderPane.alignment="CENTER">
+          <padding>
+              <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
+          </padding>
+
+          <Label styleClass="header-label" text="Account Management" />
+
+          <HBox alignment="CENTER" spacing="10">
+             <Label text="Account:"/>
+             <ComboBox fx:id="accountSelector" promptText="Select Account" prefWidth="250" HBox.hgrow="ALWAYS"/>
+             <Button fx:id="createAccountButton" text="+" onAction="#handleCreateAccount" styleClass="add-button">
+                 <tooltip><Tooltip text="Create New Account"/></tooltip>
+             </Button>
+          </HBox>
+
+          <HBox alignment="CENTER" spacing="10">
+             <Label text="Amount:" />
+             <TextField fx:id="amountField" promptText="0.00" maxWidth="150" />
+          </HBox>
+
+          <Label fx:id="messageLabel" style="-fx-text-fill: red;"/>
+
+      </VBox>
+   </center>
+</BorderPane>
