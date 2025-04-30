@@ -10,15 +10,22 @@ package com.example.bankgui;
 
 import java.util.Calendar;
 import java.text.SimpleDateFormat;
+import java.util.List;
+import java.util.ArrayList;
 
 /**
  * Provides a basic bank account with deposit, withdrawal, and statement functionalities
  */
 public class BankAccount {
 
+    /**
+     * Represents a single transaction entry for display in a table
+     */
+    public static record TransactionRecord(String timestamp, String type, double amount, double balance) {}
+
     private final long accountNumber;
     private double balance;
-    private final StringBuilder transactions;
+    private final List<TransactionRecord> transactionHistory;
     private static final SimpleDateFormat DATE_FORMAT = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
     private static long nextAccountNumber = 100001;
 
@@ -28,7 +35,7 @@ public class BankAccount {
     public BankAccount() {
         this.accountNumber = generateAccountNumber();
         this.balance = 0.0;
-        this.transactions = new StringBuilder("Account Statement for Account #" + this.accountNumber + ":\n");
+        this.transactionHistory = new ArrayList<>();
         recordTransaction("Account opened", 0.0);
     }
 
@@ -44,7 +51,7 @@ public class BankAccount {
             throw new BankAccountException("Initial balance cannot be negative.");
         }
         this.accountNumber = generateAccountNumber();
-        this.transactions = new StringBuilder("Account Statement for Account #" + this.accountNumber + ":\n");
+        this.transactionHistory = new ArrayList<>();
         this.balance = initialBalance;
         recordTransaction("Account opened with initial deposit", initialBalance);
     }
@@ -96,12 +103,12 @@ public class BankAccount {
     }
 
     /**
-     * Returns the transaction statement for the account
+     * Returns the transaction history as a list of records
      *
-     * @return A string containing all recorded transactions
+     * @return A List of TransactionRecord objects
      */
-    public String getStatement() {
-        return transactions.toString();
+    public List<TransactionRecord> getTransactionHistory() {
+        return new ArrayList<>(transactionHistory); // this returns a copy for immutability
     }
 
     /**
@@ -123,11 +130,9 @@ public class BankAccount {
     private void recordTransaction(String type, double amount) {
         Calendar cal = Calendar.getInstance();
         String timestamp = DATE_FORMAT.format(cal.getTime());
-        transactions.append(timestamp)
-                    .append(" | Type: ").append(String.format("%-10s", type))
-                    .append(" | Amount: ").append(String.format("%10.2f", amount))
-                    .append(" | Balance: ").append(String.format("%10.2f", balance))
-                    .append("\n");
+        // Create a record instead of appending to string
+        TransactionRecord record = new TransactionRecord(timestamp, type, amount, balance);
+        transactionHistory.add(record);
     }
 
     /**
